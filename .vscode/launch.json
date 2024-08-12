@@ -84,6 +84,9 @@
             "stopAtEntry": false,
             "console": "internalConsole",
             "args": [],
+            "env": {
+                "WAYLAND_DISPLAY": ""
+            },
             "pipeTransport": {
                 "pipeCwd": "${workspaceFolder}",
                 "pipeProgram": "ssh",

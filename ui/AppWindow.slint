@@ -6,41 +6,6 @@ import {
 } from "std-widgets.slint";
 
 export component AppWindow inherits Window {
-    in-out property<int> counterFocus: 0;
-    property<bool> voidFocus: false;
-    callback change;
-    callback click;
-
-    change() => {
-        debug("Button moved");
-        debug(counterFocus);
-
-        if (counterFocus == 1) {
-            b1.focus();
-        } else if (counterFocus == 2) {
-            b2.focus();
-        } else if (counterFocus == 3) {
-            b3.focus();
-        } else if (counterFocus == 4) {
-            b4.focus();
-        }
-    }
-
-    click() => {
-        debug("Button clicked");
-        debug(counterFocus);
-
-        if (counterFocus == 1) {
-            b1.clicked();
-        } else if (counterFocus == 2) {
-            b2.clicked();
-        } else if (counterFocus == 3) {
-            b3.clicked();
-        } else if (counterFocus == 4) {
-            b4.clicked();
-        }
-    }
-
     default-font-family: "Arial";
     default-font-size: 45px;
 

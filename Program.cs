@@ -1,9 +1,12 @@
+
 using Slint;
 using AppWindow;
 using System.Device.Gpio;
 using Iot.Device.RotaryEncoder;
 using Iot.Device.Button;
 using System.Device.Gpio.Drivers;
+using SharpHook;
+using SharpHook.Native;
 
 #if IOT
 var _tmpCounter = 1f;
@@ -29,21 +32,24 @@ var encoder = new QuadratureRotaryEncoder(
 };
 #endif
 
+var keySimulator = new EventSimulator();
 var win = new Window();
 
 Console.WriteLine("Hello Torizon!");
 
 // start the focus at the first button
-Slint.Timer.Start(TimerMode.SingleShot, 1000, () => {
-    win.counterFocus++;
-    win.Change();
+Slint.Timer.Start(TimerMode.SingleShot, 2000, () => {
+    keySimulator.SimulateKeyPress(KeyCode.VcTab);
+    keySimulator.SimulateKeyRelease(KeyCode.VcTab);
 });
 
 #if IOT
 // encoder events
 _encoderClick.Press += (s, e) => {
     win.RunOnUiThread(() => {
-        win.Click();
+        // press enter on the actual element focused
+        keySimulator.SimulateKeyPress(KeyCode.VcEnter);
+        keySimulator.SimulateKeyRelease(KeyCode.VcEnter);
     });
 };
 
@@ -53,21 +59,18 @@ encoder.PulseCountChanged += (s, e) => {
     win.RunOnUiThread(() => {
         // use the tmpCounter to check if we go up or down
         if (_tmpCounter > e.Value) {
-            win.counterFocus++;
+            // next
+            keySimulator.SimulateKeyPress(KeyCode.VcTab);
+            keySimulator.SimulateKeyRelease(KeyCode.VcTab);
         } else {
-            win.counterFocus--;
+            // previous
+            keySimulator.SimulateKeyPress(KeyCode.VcLeftShift);
+            keySimulator.SimulateKeyPress(KeyCode.VcTab);
+            keySimulator.SimulateKeyRelease(KeyCode.VcTab);
+            keySimulator.SimulateKeyRelease(KeyCode.VcLeftShift);
         }
 
         _tmpCounter = (float)e.Value;
-
-        // normalize the values to be a rotation
-        if (win.counterFocus < 1) {
-            win.counterFocus = 4;
-        } else if (win.counterFocus > 4) {
-            win.counterFocus = 1;
-        }
-
-        win.Change();
     });
 };
 #endif

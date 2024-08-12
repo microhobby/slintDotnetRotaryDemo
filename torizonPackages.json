@@ -1,6 +1,12 @@
 {
   "prodRuntimeDeps": [],
   "devRuntimeDeps": [
-    "libgpiod-dev"
+    "libgpiod-dev",
+    "libxt6",
+    "libxtst6",
+    "libxinerama1",
+    "libxkbcommon-x11-0",
+    "libxkbcommon0",
+    "x11-apps"
   ]
 }
