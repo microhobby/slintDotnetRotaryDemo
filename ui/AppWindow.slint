@@ -1,0 +1,88 @@
+import {
+    Button,
+    HorizontalBox,
+    VerticalBox,
+    AboutSlint
+} from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    in-out property<int> counterFocus: 0;
+    property<bool> voidFocus: false;
+    callback change;
+    callback click;
+
+    change() => {
+        debug("Button moved");
+        debug(counterFocus);
+
+        if (counterFocus == 1) {
+            b1.focus();
+        } else if (counterFocus == 2) {
+            b2.focus();
+        } else if (counterFocus == 3) {
+            b3.focus();
+        } else if (counterFocus == 4) {
+            b4.focus();
+        }
+    }
+
+    click() => {
+        debug("Button clicked");
+        debug(counterFocus);
+
+        if (counterFocus == 1) {
+            b1.clicked();
+        } else if (counterFocus == 2) {
+            b2.clicked();
+        } else if (counterFocus == 3) {
+            b3.clicked();
+        } else if (counterFocus == 4) {
+            b4.clicked();
+        }
+    }
+
+    default-font-family: "Arial";
+    default-font-size: 45px;
+
+    VerticalBox {
+        alignment: center;
+        spacing: 15px;
+
+        HorizontalBox {
+            alignment: center;
+            spacing: 15px;
+
+            header := Text {
+                text: "";
+            }
+        }
+
+        b1 := Button {
+            text: "Button 1";
+            clicked => {
+                header.text = "Button 1 clicked";
+            }
+        }
+
+        b2 := Button {
+            text: "Button 2";
+            clicked => {
+                header.text = "Button 2 clicked";
+            }
+        }
+
+        b3 := Button {
+            text: "Button 3";
+            clicked => {
+                header.text = "Button 3 clicked";
+            }
+        }
+
+        b4 := Button {
+            text: "Button 4";
+            clicked => {
+                header.text = "Button 4 clicked";
+            }
+        }
+     }
+}

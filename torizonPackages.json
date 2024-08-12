@@ -1,0 +1,6 @@
+{
+  "prodRuntimeDeps": [],
+  "devRuntimeDeps": [
+    "libgpiod-dev"
+  ]
+}
